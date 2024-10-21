@@ -11,15 +11,13 @@ class SplashController extends BaseController{
   @override
   void onInit() {
     Future.delayed(const Duration(seconds: 3),
-          ()=> checkLogin2(),);
+          ()=> goToHome(),);
     super.onInit();
   }
 
-  
-  void checkLogin2(){
+
+  void goToHome(){
     Get.toNamed(HomeScreen.pageId);
   }
-
-
 
 }

@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-class HomeScreen extends GetView<HomeController> {
+class HomeScreen extends GetView<HomeController>{
   static const pageId = "/HomeScreen";
 
   const HomeScreen({super.key});
@@ -29,7 +29,7 @@ class HomeScreen extends GetView<HomeController> {
             backgroundColor: ColorsConfig.blackColor,
             key: controller.scaffoldKey,
             appBar: CommonAppBar(
-              title: "Ciright Live",
+              title: "SSBI",
               titleTextStyle: CustomTextStyle.appBarText,
               leadingIcon: "assets/images/btnMenu@2x.png",
               iconSize: 8.5,
@@ -46,6 +46,22 @@ class HomeScreen extends GetView<HomeController> {
                     const SizedBox(height: 15),
                     Text("SSBI :", style: CustomTextStyle.titleTextStyle),
                     const SizedBox(height: 15),
+                    Center(
+                      child: Container(
+                        width: Get.width * 0.5,
+                        child: CommonButton(
+                          name: "Scan QR",
+                          onPressed: () {
+                            print("pprrss");
+                            controller.scanQRCode();
+                          },
+                          color: ColorsConfig.blueButtonColor,
+                          radius: 10,
+                          textColor: ColorsConfig.whiteColor,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -54,6 +70,7 @@ class HomeScreen extends GetView<HomeController> {
                           child: CommonButton(
                             name: "Take Image",
                             onPressed: () {
+                              print("pprrss");
                               controller.pickImage();
                             },
                             color: ColorsConfig.blueButtonColor,
@@ -78,8 +95,19 @@ class HomeScreen extends GetView<HomeController> {
                     const SizedBox(height: 20),
                     Obx(() {
                       if (controller.imageList.isNotEmpty) {
-                        return Column(
-                          children: controller.imageList.map((file) => Image.file(file, height: 100)).toList(),
+                        return GridView.builder(
+                          shrinkWrap: true,  // Allows the GridView to adjust its height
+                          physics: const NeverScrollableScrollPhysics(),  // Disable GridView scrolling if it's inside another scrollable widget
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,  // Number of columns
+                            crossAxisSpacing: 8,  // Spacing between columns
+                            mainAxisSpacing: 8,  // Spacing between rows
+                          ),
+                          itemCount: controller.imageList.length,
+                          itemBuilder: (context, index) {
+                            final file = controller.imageList[index];
+                            return Image.file(file, height: 100, fit: BoxFit.cover);
+                          },
                         );
                       } else {
                         return const Center(child: Text('No images selected.'));
@@ -87,16 +115,31 @@ class HomeScreen extends GetView<HomeController> {
                     }),
                     Obx(() {
                       if (controller.videoList.isNotEmpty) {
-                        return Column(
-                          children: controller.videoList.map((file) => ListTile(
-                            title: Text("Video: ${file.path}"),
-                            // Here you can implement a video player widget if needed
-                          )).toList(),
+                        return GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,  // Adjust according to your needs
+                            crossAxisSpacing: 8,
+                            mainAxisSpacing: 8,
+                          ),
+                          itemCount: controller.videoList.length,
+                          itemBuilder: (context, index) {
+                            final file = controller.videoList[index];
+                            return ListTile(
+                              title: Text(
+                                "Video: ${file.path}",
+                                style: CustomTextStyle.fPText,
+                              ),
+                              // Implement a video player widget or thumbnail if needed
+                            );
+                          },
                         );
                       } else {
                         return const Center(child: Text('No videos selected.'));
                       }
                     }),
+
                   ],
                 ),
               ),
@@ -106,5 +149,6 @@ class HomeScreen extends GetView<HomeController> {
       ),
     );
   }
+
 }
 

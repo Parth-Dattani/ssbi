@@ -13,4 +13,9 @@ final List<GetPage> appPages = [
       name: HomeScreen.pageId,
       page: () => HomeScreen(),
       binding: HomeBinding()),
+
+  GetPage(
+      name: ScannedDataScreen.pageId,
+      page: () => ScannedDataScreen(),
+      binding: ScannedBinding()),
 ];
