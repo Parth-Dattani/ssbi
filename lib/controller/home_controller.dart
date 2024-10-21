@@ -428,7 +428,7 @@ class HomeController extends BaseController {
             final result = await SaverGallery.saveFile(
               name: basename(pickedFile.path),
               androidExistNotSave: true,
-              file: newFile.path, // Use the file path instead of bytes
+              file: newFile.path,
             );
 
             print("Save result: ${result}");
@@ -474,11 +474,14 @@ class HomeController extends BaseController {
               videoList.add(savedFile);
               selectedFile.value = savedFile;
               print("Video added to the list at: ${savedFile.path}");
+
+              // Play the video
+              ///await playVideo(savedFile);
             }
           } catch (e) {
             Get.snackbar(
               "Error",
-              "Failed to copy video: $e",
+              "Failed to copy or play video: $e",
               backgroundColor: Colors.red,
             );
           }
@@ -498,6 +501,7 @@ class HomeController extends BaseController {
       );
     }
   }
+
 
   // Future<void> pickVideo() async {
   //   if (await _checkAndRequestPermissions()) {

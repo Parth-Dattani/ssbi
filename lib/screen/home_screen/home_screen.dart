@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../constant/constant.dart';
-import '../../widgets/widget.dart';
-import '../controller/controller.dart';
+import '../../../constant/constant.dart';
+import '../../../widgets/widget.dart';
+import '../../controller/controller.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
